@@ -1,7 +1,7 @@
-INSERT INTO calorie.user_data (name, email, age, weight, height, weight_aim)
-    VALUES ('Arina', 'arina@mail.ru', 30, 60, 166, 'LOSS');
-INSERT INTO calorie.user_data (name, email, age, weight, height, weight_aim)
-    VALUES ('Jack', 'jack@mail.ru', 5, 16, 32, 'GAIN');
+INSERT INTO calorie.user_data (name, email, age, weight, height, weight_aim, daily_calorie)
+    VALUES ('Arina', 'arina@mail.ru', 30, 60, 166, 'LOSS', 6666);
+INSERT INTO calorie.user_data (name, email, age, weight, height, weight_aim, daily_calorie)
+    VALUES ('Jack', 'jack@mail.ru', 5, 16, 32, 'GAIN', 7777);
 
 INSERT INTO calorie.meal (name, nutrition, protein, fat, carb)
     VALUES ('banana', '70', 2, 6, 5);

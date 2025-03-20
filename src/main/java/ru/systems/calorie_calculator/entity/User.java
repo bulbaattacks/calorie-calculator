@@ -19,4 +19,5 @@ public class User {
     private Integer weight;
     private Integer height;
     private String weightAim;
+    private Integer dailyCalorie;
 }

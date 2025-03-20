@@ -1,11 +1,12 @@
 CREATE TABLE IF NOT EXISTS calorie.user_data (
-    id           bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name         varchar(255) NOT NULL, -- Имя
-    email        varchar(320) NOT NULL, -- Email
-    age          integer NOT NULL, -- Возраст
-    weight       integer NOT NULL, -- Вес
-    height       integer NOT NULL, -- Рост
-    weight_aim   varchar(16) NOT NULL, -- Цель (Похудение, Поддержание, Набор массы)
+    id            bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    name          varchar(255) NOT NULL, -- Имя
+    email         varchar(320) NOT NULL, -- Email
+    age           integer NOT NULL, -- Возраст
+    weight        integer NOT NULL, -- Вес
+    height        integer NOT NULL, -- Рост
+    weight_aim    varchar(16) NOT NULL, -- Цель (Похудение, Поддержание, Набор массы)
+    daily_calorie integer  NOT NULL,
     CONSTRAINT chk_weight_aim CHECK (weight_aim IN ('LOSS', 'MAINTENANCE', 'GAIN'))
 );
 
