@@ -1,5 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS calorie;
-
 CREATE TABLE IF NOT EXISTS calorie.user_data (
     id           bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name         varchar(255) NOT NULL, -- Имя
@@ -8,23 +6,24 @@ CREATE TABLE IF NOT EXISTS calorie.user_data (
     weight       integer NOT NULL, -- Вес
     height       integer NOT NULL, -- Рост
     weight_aim   varchar(16) NOT NULL, -- Цель (Похудение, Поддержание, Набор массы)
-    CONSTRAINT chk_weight_aim CHECK (weight_aim IN ('loss', 'maintenance', 'gain'))
+    CONSTRAINT chk_weight_aim CHECK (weight_aim IN ('LOSS', 'MAINTENANCE', 'GAIN'))
 );
 
 CREATE TABLE IF NOT EXISTS calorie.meal (
-    id           bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name         varchar(255) NOT NULL, -- Название
-    calorie_per_meal        varchar(320) NOT NULL, -- Количество калорий на порцию
-    protein      integer NOT NULL, -- Белки
-    fat     integer NOT NULL, -- Жиры
-    carb     integer NOT NULL -- Углеводы
+    id                  bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    name                varchar(255) NOT NULL, -- Название
+    nutrition           integer NOT NULL, -- Количество калорий на 100 g
+    protein             integer NOT NULL, -- Белки
+    fat                 integer NOT NULL, -- Жиры
+    carb                integer NOT NULL -- Углеводы
 );
 
 CREATE TABLE IF NOT EXISTS calorie.food_intake (
-    intake_date  date NOT NULL,
-    user_id      bigint NOT NULL,
-    meal_id      bigint NOT NULL,
-    quantity     integer NOT NULL,
+    intake_date        date NOT NULL,
+    intake_type        varchar(16) NOT NULL,
+    user_id            bigint NOT NULL,
+    meal_id            bigint NOT NULL,
+    CONSTRAINT chk_intake_type CHECK (intake_type IN ('BREAKFAST', 'LUNCH', 'DINNER')),
     CONSTRAINT fk_user_data FOREIGN KEY (user_id)
         REFERENCES calorie.user_data(id)
         ON DELETE CASCADE
@@ -33,5 +32,5 @@ CREATE TABLE IF NOT EXISTS calorie.food_intake (
             REFERENCES calorie.meal(id)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-    PRIMARY KEY (intake_date, user_id, meal_id)
+    PRIMARY KEY (intake_date, intake_type, user_id, meal_id)
 );
