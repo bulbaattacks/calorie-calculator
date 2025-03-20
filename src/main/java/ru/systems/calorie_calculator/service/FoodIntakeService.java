@@ -36,7 +36,7 @@ public class FoodIntakeService {
 
         dto.getMealIds().forEach(mealId -> {
             var meal = idMealMap.get(mealId);
-            var foodIntake = FoodIntake.create(intakeDate, String.valueOf(dto.getIntakeType()), user, meal);
+            var foodIntake = FoodIntake.create(intakeDate, dto.getIntakeType(), user, meal);
             intakes.add(foodIntake);
         });
 

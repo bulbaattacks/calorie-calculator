@@ -17,4 +17,3 @@ public class FoodIntakeDto {
     private List<Long> mealIds;
 }
 
-enum IntakeType {BREAKFAST, LUNCH, DINNER}

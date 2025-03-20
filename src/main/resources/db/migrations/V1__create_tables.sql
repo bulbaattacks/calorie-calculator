@@ -20,11 +20,11 @@ CREATE TABLE IF NOT EXISTS calorie.meal (
 );
 
 CREATE TABLE IF NOT EXISTS calorie.food_intake (
-    intake_date        date NOT NULL,
-    intake_type        varchar(16) NOT NULL,
-    user_id            bigint NOT NULL,
-    meal_id            bigint NOT NULL,
-    CONSTRAINT chk_intake_type CHECK (intake_type IN ('BREAKFAST', 'LUNCH', 'DINNER')),
+    date        date NOT NULL,
+    type        varchar(16) NOT NULL,
+    user_id     bigint NOT NULL,
+    meal_id     bigint NOT NULL,
+    CONSTRAINT chk_intake_type CHECK (type IN ('BREAKFAST', 'LUNCH', 'DINNER')),
     CONSTRAINT fk_user_data FOREIGN KEY (user_id)
         REFERENCES calorie.user_data(id)
         ON DELETE CASCADE
@@ -33,5 +33,5 @@ CREATE TABLE IF NOT EXISTS calorie.food_intake (
             REFERENCES calorie.meal(id)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-    PRIMARY KEY (intake_date, intake_type, user_id, meal_id)
+    PRIMARY KEY (date, type, user_id, meal_id)
 );

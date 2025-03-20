@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.systems.calorie_calculator.dto.IntakeType;
 
 import java.time.LocalDate;
 
@@ -18,11 +19,13 @@ public class FoodIntake {
     private FoodIntakeId id;
 
     @Embeddable
+    @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FoodIntakeId {
-        private LocalDate intakeDate;
-        private String intakeType;
+        private LocalDate date;
+        @Enumerated(EnumType.STRING)
+        private IntakeType type;
         @ManyToOne
         @JoinColumn(name = "user_id")
         private User user;
@@ -31,12 +34,12 @@ public class FoodIntake {
         private Meal meal;
     }
 
-    public static FoodIntake create(LocalDate intakeDate,
-                                    String intakeType,
+    public static FoodIntake create(LocalDate date,
+                                    IntakeType type,
                                     User user,
                                     Meal meal) {
         var entity = new FoodIntake();
-        entity.setId(new FoodIntakeId(intakeDate, intakeType, user, meal));
+        entity.setId(new FoodIntakeId(date, type, user, meal));
         return entity;
     }
 }

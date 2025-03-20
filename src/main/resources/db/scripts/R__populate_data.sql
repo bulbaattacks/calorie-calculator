@@ -8,7 +8,7 @@ INSERT INTO calorie.meal (name, nutrition, protein, fat, carb)
 INSERT INTO calorie.meal (name, nutrition, protein, fat, carb)
     VALUES ('apple', '40', 3, 2, 1);
 
-INSERT INTO calorie.food_intake (intake_date, intake_type, user_id, meal_id)
+INSERT INTO calorie.food_intake (date, type, user_id, meal_id)
     VALUES ('2025-03-19', 'BREAKFAST', 1, 1);
-INSERT INTO calorie.food_intake (intake_date, intake_type, user_id, meal_id)
+INSERT INTO calorie.food_intake (date, type, user_id, meal_id)
     VALUES ('2025-03-19', 'BREAKFAST', 2, 2);
