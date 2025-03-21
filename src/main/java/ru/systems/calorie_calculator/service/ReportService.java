@@ -24,7 +24,7 @@ public class ReportService {
     private final UserDao userDao;
 
     public DailyReportDto calculateDailyReport(Long userId) {
-        List<FoodIntake> userFoodIntakes = dao.findAllByUserIdAndDate(userId, LocalDate.now());
+        List<FoodIntake> userFoodIntakes = dao.findAllByDateAndUserId(LocalDate.now(), userId);
         Map<IntakeType, Integer> caloriePerIntake = new EnumMap<>(IntakeType.class);
         userFoodIntakes.forEach(foodIntake -> {
             var intakeType = foodIntake.getType();
@@ -36,13 +36,13 @@ public class ReportService {
     }
 
     public DailyCalorieCheckDto calculateCalorieReport(Long userId) {
-        List<FoodIntake> userFoodIntakes = dao.findAllByUserIdAndDate(userId, LocalDate.now());
+        List<FoodIntake> userFoodIntakes = dao.findAllByDateAndUserId(LocalDate.now(), userId);
         int actualCalorie = userFoodIntakes
                 .stream()
                 .map(foodIntake -> foodIntake.getMeal().getNutrition())
                 .mapToInt(Integer::intValue)
                 .sum();
-        int targetCalorie = userFoodIntakes.getFirst().getUser().getDailyCalorie();
+        int targetCalorie = userFoodIntakes.getFirst().getUser().getDailyCalorie(); // TODO EMPTY LIST
         int differenceCalorie = targetCalorie - actualCalorie;
         var isDailyCalorieNormExceeded = differenceCalorie < 0;
         return new DailyCalorieCheckDto(actualCalorie, targetCalorie, differenceCalorie, isDailyCalorieNormExceeded);
@@ -79,10 +79,11 @@ public class ReportService {
         return dateIntakeTypeMealMap.entrySet()
                 .stream()
                 .map(dateIntakeTypeMealES -> {
+
                     var date = dateIntakeTypeMealES.getKey();
                     Map<IntakeType, HistoryReportDto.IntakeTypeMealDto> intakeTypeMealMap = new EnumMap<>(IntakeType.class);
-
                     dateIntakeTypeMealES.getValue().forEach((intakeType, value) -> {
+
                         var totalCalorie = value
                                 .stream()
                                 .map(Meal::getNutrition)
@@ -98,7 +99,9 @@ public class ReportService {
                         var intakeTypeMealDto = new HistoryReportDto.IntakeTypeMealDto(totalCalorie, foodList);
                         intakeTypeMealMap.put(intakeType, intakeTypeMealDto);
                     });
+
                     return new HistoryReportDto(date, intakeTypeMealMap);
+
                 }).toList();
     }
 }

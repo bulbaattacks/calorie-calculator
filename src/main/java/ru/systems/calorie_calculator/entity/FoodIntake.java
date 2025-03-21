@@ -5,16 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 import ru.systems.calorie_calculator.dto.IntakeType;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "food_intake")
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldNameConstants
+@Entity
+@Table(name = "food_intake")
 public class FoodIntake {
 
     @Id
@@ -24,10 +26,12 @@ public class FoodIntake {
     private LocalDate date;
     @Enumerated(EnumType.STRING)
     private IntakeType type;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meal_id")
     private Meal meal;
 }
