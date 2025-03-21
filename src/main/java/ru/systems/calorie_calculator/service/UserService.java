@@ -1,7 +1,7 @@
 package ru.systems.calorie_calculator.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import ru.systems.calorie_calculator.dao.UserDao;
 import ru.systems.calorie_calculator.dto.RequestUserDto;
@@ -12,15 +12,15 @@ import ru.systems.calorie_calculator.entity.User;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final ObjectMapper mapper;
+    private final ModelMapper mapper;
     private final UserDao dao;
 
     public ResponseUserDto saveUser(RequestUserDto dto) {
         int dailyCalorie = calculateDailyCalorie(dto.getWeight(), dto.getHeight(), dto.getAge());
-        var entity = mapper.convertValue(dto, User.class);
+        var entity = mapper.map(dto, User.class);
         entity.setDailyCalorie(dailyCalorie);
         dao.save(entity);
-        return mapper.convertValue(entity, ResponseUserDto.class);
+        return mapper.map(entity, ResponseUserDto.class);
     }
 
     private int calculateDailyCalorie(final int weight, final int height, final int age) {

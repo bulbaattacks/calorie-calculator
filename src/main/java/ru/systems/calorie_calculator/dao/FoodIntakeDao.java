@@ -14,6 +14,9 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface FoodIntakeDao extends JpaRepository<FoodIntake, Long> {
 
-    @Query("SELECT fi FROM FoodIntake fi WHERE fi.id.user.id = :id AND fi.id.date = :date")
-    List<FoodIntake> findByUserIdAndDate(@Param("id") Long id, @Param("date") LocalDate date);
+    @Query("SELECT fi FROM FoodIntake fi WHERE fi.id.user.id = :userId AND fi.id.date = :date")
+    List<FoodIntake> findAllByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
+
+    @Query("SELECT fi FROM FoodIntake fi WHERE fi.id.user.id = :userId")
+    List<FoodIntake> findAllByUserId(@Param("userId") Long userId);
 }

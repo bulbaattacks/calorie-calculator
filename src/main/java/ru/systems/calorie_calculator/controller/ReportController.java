@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.systems.calorie_calculator.dto.report.DailyCalorieCheckDto;
 import ru.systems.calorie_calculator.dto.report.DailyReportDto;
+import ru.systems.calorie_calculator.dto.report.HistoryReportDto;
 import ru.systems.calorie_calculator.service.ReportService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/report")
@@ -16,13 +19,18 @@ public class ReportController {
 
     private final ReportService service;
 
-    @GetMapping("/daily/{id}")
-    public DailyReportDto getDailyReport(@PathVariable Long id) {
-        return service.calculateDailyReport(id);
+    @GetMapping("/daily/{userId}")
+    public DailyReportDto getDailyReport(@PathVariable Long userId) {
+        return service.calculateDailyReport(userId);
     }
 
-    @GetMapping("/calorie/{id}")
-    public DailyCalorieCheckDto getCalorieReport(@PathVariable Long id) {
-        return service.calculateCalorieReport(id);
+    @GetMapping("/calorie/{userId}")
+    public DailyCalorieCheckDto getCalorieReport(@PathVariable Long userId) {
+        return service.calculateCalorieReport(userId);
+    }
+
+    @GetMapping("/history/{userId}")
+    public List<HistoryReportDto> getHistoryReport(@PathVariable Long userId) {
+        return service.createHistoryReport(userId);
     }
 }
