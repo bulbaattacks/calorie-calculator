@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS calorie.meal (
 );
 
 CREATE TABLE IF NOT EXISTS calorie.food_intake (
+    id          bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     date        date NOT NULL,
     type        varchar(16) NOT NULL,
     user_id     bigint NOT NULL,
@@ -32,6 +33,5 @@ CREATE TABLE IF NOT EXISTS calorie.food_intake (
     CONSTRAINT fk_meal FOREIGN KEY (meal_id)
             REFERENCES calorie.meal(id)
             ON DELETE CASCADE
-            ON UPDATE CASCADE,
-    PRIMARY KEY (date, type, user_id, meal_id)
+            ON UPDATE CASCADE
 );

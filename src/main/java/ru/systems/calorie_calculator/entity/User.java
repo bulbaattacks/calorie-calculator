@@ -25,7 +25,7 @@ public class User {
     private Integer dailyCalorie;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "id.user")
-    @OrderBy("id.date ASC")
+    @OneToMany(mappedBy = "user")
+    @OrderBy("date ASC")
     private List<FoodIntake> foodIntakes;
 }
