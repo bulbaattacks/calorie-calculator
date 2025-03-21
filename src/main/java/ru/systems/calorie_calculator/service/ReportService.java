@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.systems.calorie_calculator.dao.FoodIntakeDao;
 import ru.systems.calorie_calculator.dto.IntakeType;
+import ru.systems.calorie_calculator.dto.report.DailyCalorieCheckDto;
 import ru.systems.calorie_calculator.dto.report.DailyReportDto;
 import ru.systems.calorie_calculator.entity.FoodIntake;
 
@@ -28,5 +29,18 @@ public class ReportService {
         });
         int totalCalorie = caloriePerIntake.values().stream().reduce(0, Integer::sum);
         return new DailyReportDto(caloriePerIntake, totalCalorie);
+    }
+
+    public DailyCalorieCheckDto calculateCalorieReport(Long id) {
+        List<FoodIntake> userFoodIntakes = dao.findByUserIdAndDate(id, LocalDate.now());
+        int actualCalorie = userFoodIntakes
+                .stream()
+                .map(foodIntake -> foodIntake.getId().getMeal().getNutrition())
+                .mapToInt(Integer::intValue)
+                .sum();
+        int targetCalorie = userFoodIntakes.getFirst().getId().getUser().getDailyCalorie();
+        int differenceCalorie = targetCalorie - actualCalorie;
+        var isDailyCalorieNormExceeded = differenceCalorie < 0;
+        return new DailyCalorieCheckDto(actualCalorie, targetCalorie, differenceCalorie, isDailyCalorieNormExceeded);
     }
 }
