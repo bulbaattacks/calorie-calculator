@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "2363d5fd-5102-4c81-b3a8-61ec6e735a83",
+		"name": "calorie-calc-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17182765"
+	},
+	"item": [
+		{
+			"name": "add user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Jackie\",\n    \"email\": \"jc@mail.ru\",\n    \"age\": 5,\n    \"weight\": 16,\n    \"height\": 32,\n    \"weightAim\": \"LOSS\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8080/user",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add meal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"meat\",\n    \"nutrition\": 300,\n    \"protein\": 30,\n    \"fat\": 6,\n    \"carb\": 6\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8080/meal",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"meal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add food_intake",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"intakeType\": \"DINNER\",\n    \"userId\": 1,\n    \"mealIds\": [\n        1\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8080/food_intake",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"food_intake"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "report/daily/{user_id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:8080/report/daily/:userId",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"report",
+						"daily",
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "report/calorie_exceeded/{userId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:8080/report/calorie_exceeded/:userId",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"report",
+						"calorie_exceeded",
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "report/history/{userId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:8080/report/history/:userId",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"report",
+						"history",
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
