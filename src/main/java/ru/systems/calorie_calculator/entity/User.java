@@ -1,7 +1,6 @@
 package ru.systems.calorie_calculator.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +23,6 @@ public class User {
     private String weightAim;
     private Integer dailyCalorie;
 
-    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "user")
     @OrderBy("date ASC")
     private List<FoodIntake> foodIntakes;

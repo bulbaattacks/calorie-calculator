@@ -39,7 +39,7 @@ public class ReportService {
         return new DailyReportDto(caloriePerIntake, totalCalorie);
     }
 
-    public DailyCalorieCheckDto calculateCalorieReport(Long userId) {
+    public DailyCalorieCheckDto calculateCalorieReminderReport(Long userId) {
         User user = userDao.findById(userId).orElseThrow(UserNotFoundException::new);
         List<FoodIntake> userFoodIntakes = foodIntakeDao.findAllByDateAndUserId(LocalDate.now(), userId);
         int actualCalorie = userFoodIntakes

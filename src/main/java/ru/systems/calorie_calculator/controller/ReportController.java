@@ -26,7 +26,7 @@ public class ReportController {
 
     @GetMapping("/calorie/{userId}")
     public DailyCalorieCheckDto getCalorieReport(@PathVariable Long userId) {
-        return service.calculateCalorieReport(userId);
+        return service.calculateCalorieReminderReport(userId);
     }
 
     @GetMapping("/history/{userId}")
