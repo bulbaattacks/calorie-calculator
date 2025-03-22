@@ -11,6 +11,7 @@ import ru.systems.calorie_calculator.dto.report.HistoryReportDto;
 import ru.systems.calorie_calculator.entity.FoodIntake;
 import ru.systems.calorie_calculator.entity.Meal;
 import ru.systems.calorie_calculator.entity.User;
+import ru.systems.calorie_calculator.exception.UserNotFoundException;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -20,11 +21,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReportService {
 
-    private final FoodIntakeDao dao;
     private final UserDao userDao;
+    private final FoodIntakeDao foodIntakeDao;
 
     public DailyReportDto calculateDailyReport(Long userId) {
-        List<FoodIntake> userFoodIntakes = dao.findAllByDateAndUserId(LocalDate.now(), userId);
+        if (!userDao.existsById(userId)) {
+            throw new UserNotFoundException();
+        }
+        List<FoodIntake> userFoodIntakes = foodIntakeDao.findAllByDateAndUserId(LocalDate.now(), userId);
         Map<IntakeType, Integer> caloriePerIntake = new EnumMap<>(IntakeType.class);
         userFoodIntakes.forEach(foodIntake -> {
             var intakeType = foodIntake.getType();
@@ -36,20 +40,21 @@ public class ReportService {
     }
 
     public DailyCalorieCheckDto calculateCalorieReport(Long userId) {
-        List<FoodIntake> userFoodIntakes = dao.findAllByDateAndUserId(LocalDate.now(), userId);
+        User user = userDao.findById(userId).orElseThrow(UserNotFoundException::new);
+        List<FoodIntake> userFoodIntakes = foodIntakeDao.findAllByDateAndUserId(LocalDate.now(), userId);
         int actualCalorie = userFoodIntakes
                 .stream()
                 .map(foodIntake -> foodIntake.getMeal().getNutrition())
                 .mapToInt(Integer::intValue)
                 .sum();
-        int targetCalorie = userFoodIntakes.getFirst().getUser().getDailyCalorie(); // TODO EMPTY LIST
+        int targetCalorie = user.getDailyCalorie();
         int differenceCalorie = targetCalorie - actualCalorie;
         var isDailyCalorieNormExceeded = differenceCalorie < 0;
         return new DailyCalorieCheckDto(actualCalorie, targetCalorie, differenceCalorie, isDailyCalorieNormExceeded);
     }
 
     public List<HistoryReportDto> createHistoryReport(Long userId) {
-        User user = userDao.findById(userId).orElseThrow();
+        User user = userDao.findById(userId).orElseThrow(UserNotFoundException::new);
 
         Map<LocalDate, Map<IntakeType, List<Meal>>> dateIntakeTypeMealMap = new LinkedHashMap<>();
         user.getFoodIntakes().forEach(foodIntake -> {
