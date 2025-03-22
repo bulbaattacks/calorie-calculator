@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,6 +14,6 @@ public class FoodIntakeDto {
     @NotNull
     private Long userId;
     @NotNull
-    private List<Long> mealIds;
+    private Set<Long> mealIds;
 }
 

@@ -14,8 +14,9 @@ public class MealService {
     private final ModelMapper mapper;
     private final MealDao dao;
 
-    public void saveMeal(MealDto dto) {
+    public MealDto saveMeal(MealDto dto) {
         var entity = mapper.map(dto, Meal.class);
         dao.save(entity);
+        return mapper.map(entity, MealDto.class);
     }
 }

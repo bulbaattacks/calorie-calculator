@@ -15,7 +15,7 @@ public class MealController {
     private final MealService service;
 
     @PostMapping("/meal")
-    public void saveMeal(@Valid @RequestBody MealDto dto) {
-        service.saveMeal(dto);
+    public MealDto saveMeal(@Valid @RequestBody MealDto dto) {
+        return service.saveMeal(dto);
     }
 }

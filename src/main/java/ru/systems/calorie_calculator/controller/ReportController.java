@@ -24,7 +24,7 @@ public class ReportController {
         return service.calculateDailyReport(userId);
     }
 
-    @GetMapping("/calorie/{userId}")
+    @GetMapping("/calorie_exceeded/{userId}")
     public DailyCalorieCheckDto getCalorieReport(@PathVariable Long userId) {
         return service.calculateCalorieReminderReport(userId);
     }
